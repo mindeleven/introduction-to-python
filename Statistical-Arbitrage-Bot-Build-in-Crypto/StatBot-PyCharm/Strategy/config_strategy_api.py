@@ -8,9 +8,9 @@
 
 # API Imports
 import pandas as pd
-
+# works only with older version
+# pip install pybit==1.3.6
 from pybit import HTTP
-# import Websocket doesn't work anymore
 from pybit import WebSocket
 
 # CONFIG
