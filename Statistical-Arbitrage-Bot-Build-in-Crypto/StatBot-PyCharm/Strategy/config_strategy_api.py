@@ -50,16 +50,16 @@ session = HTTP(api_url)
 # Web Socket Connection
 # https://bybit-exchange.github.io/docs/inverse/#t-websocketauthentication
 
-subs = [
-    "klineV2.1.BTCUSD"
-]
-ws = WebSocket(
-    "wss://stream-testnet.bybit.com/realtime",
-    subscriptions = subs
-)
-
-while True:
-    data = ws.fetch(subs[0])
-    if data:
-        print(data)
+# subs = [
+#     "klineV2.1.BTCUSD"
+# ]
+# ws = WebSocket(
+#     "wss://stream-testnet.bybit.com/realtime",
+#     subscriptions = subs
+# )
+#
+# while True:
+#     data = ws.fetch(subs[0])
+#     if data:
+#         print(data)
 
