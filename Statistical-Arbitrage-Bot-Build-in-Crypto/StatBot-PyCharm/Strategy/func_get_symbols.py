@@ -14,4 +14,5 @@ def get_tradeable_symbols():
         # (3) only coins should be recommended that are tradable
         if symbol["quote_currency"] == "USDT" and float(symbol["maker_fee"]) < 0 and symbol["status"] == "Trading":
             sym_list.append(symbol)
-    print(sym_list)
+
+    return sym_list
