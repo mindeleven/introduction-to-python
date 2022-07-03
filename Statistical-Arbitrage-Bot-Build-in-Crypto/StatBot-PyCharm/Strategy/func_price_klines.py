@@ -30,4 +30,13 @@ def get_price_klines(symbol):
         from_time = time_start_seconds
     )
 
-    return prices
+    # Manage API calls
+    # To make sure requests are not constantly sent
+    time.sleep(0.1)
+
+    # Return output
+    # If not enough data is returned (= kline_limit) it's not useful for interpretation
+    # In this case empty dictionary gets returned
+    if len(prices["result"]) != kline_limit:
+        return []
+    return prices["result"]

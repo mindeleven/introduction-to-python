@@ -25,6 +25,8 @@ kline_limit = 200
 # window of this moving average needs to be configured
 # the smaller the number the more aggressive the z-score strategy is going to be
 z_score_window = 21
+# filename and relative path
+data_file = "Data/1_price_list.json"
 
 # LIVE API
 api_key_mainnet = ""

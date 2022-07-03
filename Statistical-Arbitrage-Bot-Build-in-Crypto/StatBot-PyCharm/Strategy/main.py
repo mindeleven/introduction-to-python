@@ -1,16 +1,35 @@
+import json
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 from func_get_symbols import get_tradeable_symbols
 from func_prices_json import store_price_history
+from func_cointegration import get_cointegrated_pairs
 import pandas as pd
+import json
+import os.path
+from config_strategy_api import data_file
 
 """STRATEGY CODE"""
 if __name__ == '__main__':
 
-    # STEP 1 - Get list of symbols
-    sym_response = get_tradeable_symbols()
+    if os.path.isfile(data_file) == False:
 
-    # STEP 2 - Construct and save price history
-    if len(sym_response) > 0:
-        store_price_history(sym_response)
+        # STEP 1 - Get list of symbols
+        print("Getting symbols...")
+        sym_response = get_tradeable_symbols()
+
+        # STEP 2 - Construct and save price history
+        print("Constructing and saving price data to JSON...")
+        if len(sym_response) > 0:
+            store_price_history(sym_response)
+
+    else :
+        print("File with historic data already exists\n")
+
+    # STEP 3 - Find cointegrated pairs
+    print("Calculating co-integration...")
+    with open(data_file) as json_file:
+        price_data = json.load(json_file)
+        if len(price_data) > 0:
+            coint_pairs = get_cointegrated_pairs(price_data)
