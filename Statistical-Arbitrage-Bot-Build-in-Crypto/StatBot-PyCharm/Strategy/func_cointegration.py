@@ -1,5 +1,13 @@
 from statsmodels.tsa.stattools import coint
+import statsmodels.api as sm
+import pandas as pd
+import numpy as np
 import math
+
+# Calculate spread
+def calculate_spread(series_1, series_2, hedge_ratio):
+    spread = pd.DataFrame(series_1) - (pd.Series(series_2) * hedge_ratio)
+    return spread
 
 # Calculate co-integration
 def calculate_cointegration(series_1, series_2):
@@ -8,6 +16,19 @@ def calculate_cointegration(series_1, series_2):
     coint_t = coint_res[0]
     p_value = coint_res[1]
     critical_value = coint_res[2][1] # c value
+    # method to find hedge ratio
+    model = sm.OLS(series_1, series_2).fit()
+    hedge_ratio = model.params[0]
+    spread = calculate_spread(series_1, series_2, hedge_ratio)
+    # how often is zero line crossed ?
+    zero_crossings = len(np.where(np.diff(np.sign(spread))))[0]
+    # required p-value for cointegration is less than five
+    if p_value < 0.5 and coint_t < critical_value:
+        coint_flag = 1
+    return (
+        coint_flag, round(p_value, 2), round(coint_t, 2),
+        round(critical_value, 2), round(hedge_ratio, 2), zero_crossings
+    )
 
 
 # Put close prices into a list
@@ -17,7 +38,7 @@ def extract_close_prices(prices):
         if math.isnan(price_values["close"]):
             return []
         close_prices.append(price_values["close"])
-    print(close_prices)
+    # print(close_prices)
     return close_prices
 
 # Calculate cointegrated pairs
