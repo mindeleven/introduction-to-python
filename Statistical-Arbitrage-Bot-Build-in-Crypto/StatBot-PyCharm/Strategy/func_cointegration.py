@@ -6,7 +6,7 @@ import math
 
 # Calculate spread
 def calculate_spread(series_1, series_2, hedge_ratio):
-    spread = pd.DataFrame(series_1) - (pd.Series(series_2) * hedge_ratio)
+    spread = pd.Series(series_1) - (pd.Series(series_2) * hedge_ratio)
     return spread
 
 # Calculate co-integration
