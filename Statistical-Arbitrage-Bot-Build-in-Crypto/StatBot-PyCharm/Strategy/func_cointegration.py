@@ -58,6 +58,7 @@ def get_cointegrated_pairs(prices):
                 # Get unique combination id and ensure one off check
                 sorted_characters = sorted(sym_1 + sym_2)
                 unique = "".join(sorted_characters)
+                # make sure that the unique value isn't already in the list
                 if unique in included_list:
                     break
 
@@ -66,9 +67,21 @@ def get_cointegrated_pairs(prices):
                 series_2 = extract_close_prices(prices[sym_2])
 
                 # Check for cointegration and add cointegrated pair
-                coint_t, p_value, t_value, c_value, hedge_ratio, zero_crossings = calculate_cointegration(series_1, series_2)
-                print(coint_t, p_value) # just to check it works
+                coint_flag, p_value, t_value, c_value, hedge_ratio, zero_crossings = calculate_cointegration(series_1, series_2)
+                # print(coint_flag, p_value) # just to check it works
+                # If cointegration found put unique value in List
+                if coint_flag == 1:
+                    included_list.append(unique)
+                    # Saving findings to a spreadsheet like file
+                    # to make it easier to analyze it visually
+                    coint_pair_list.append({
+                        "sym_1": sym_1,
+                        "sym_2": sym_2,
+                        "p_value": p_value,
+                        "t_value": t_value,
+                        "c_value": c_value,
+                        "hedge_ratio": hedge_ratio,
+                        "zero_crossings": zero_crossings
+                    })
 
-                # Saving findings to a spreadsheet like file
-                # to make it easier to analyze it visually
 
