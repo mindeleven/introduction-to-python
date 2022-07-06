@@ -20,8 +20,9 @@ def calculate_cointegration(series_1, series_2):
     model = sm.OLS(series_1, series_2).fit()
     hedge_ratio = model.params[0]
     spread = calculate_spread(series_1, series_2, hedge_ratio)
+    # print(spread)
     # how often is zero line crossed ?
-    zero_crossings = len(np.where(np.diff(np.sign(spread))))[0]
+    zero_crossings = len(np.where(np.diff(np.sign(spread)))[0])
     # required p-value for cointegration is less than five
     if p_value < 0.5 and coint_t < critical_value:
         coint_flag = 1
@@ -38,7 +39,7 @@ def extract_close_prices(prices):
         if math.isnan(price_values["close"]):
             return []
         close_prices.append(price_values["close"])
-    # print(close_prices)
+    print(close_prices)
     return close_prices
 
 # Calculate cointegrated pairs
@@ -63,3 +64,11 @@ def get_cointegrated_pairs(prices):
                 # Get close prices
                 series_1 = extract_close_prices(prices[sym_1])
                 series_2 = extract_close_prices(prices[sym_2])
+
+                # Check for cointegration and add cointegrated pair
+                coint_t, p_value, t_value, c_value, hedge_ratio, zero_crossings = calculate_cointegration(series_1, series_2)
+                print(coint_t, p_value) # just to check it works
+
+                # Saving findings to a spreadsheet like file
+                # to make it easier to analyze it visually
+
