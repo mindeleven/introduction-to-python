@@ -39,7 +39,7 @@ def extract_close_prices(prices):
         if math.isnan(price_values["close"]):
             return []
         close_prices.append(price_values["close"])
-    print(close_prices)
+    # print(close_prices) # print to debug
     return close_prices
 
 # Calculate cointegrated pairs
@@ -84,4 +84,9 @@ def get_cointegrated_pairs(prices):
                         "zero_crossings": zero_crossings
                     })
 
-
+    # Output results
+    df_coint = pd.DataFrame(coint_pair_list)
+    # Sort by crossings with zero line with most crossings at the top
+    df_coint = df_coint.sort_values("zero_crossings", ascending=False)
+    df_coint.to_csv("Data/2_cointegrated_pairs.csv")
+    return df_coint
