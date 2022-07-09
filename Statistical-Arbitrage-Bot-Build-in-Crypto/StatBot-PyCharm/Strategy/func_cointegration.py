@@ -1,8 +1,20 @@
+from config_strategy_api import z_score_window
 from statsmodels.tsa.stattools import coint
 import statsmodels.api as sm
 import pandas as pd
 import numpy as np
 import math
+
+# Calculate Z-Score
+def calculate_zscore(spread):
+    df = pd.DataFrame(spread)
+    mean = df.rolling(center=False, window=z_score_window).mean()
+    std = df.rolling(center=False, window=z_score_window).std()
+    x = df.rolling(center=False, window=1).mean()
+    df["ZSCORE"] = (x - mean) / std
+    # return data frame as list
+    return df["ZSCORE"].astype(float).values
+
 
 # Calculate spread
 def calculate_spread(series_1, series_2, hedge_ratio):
