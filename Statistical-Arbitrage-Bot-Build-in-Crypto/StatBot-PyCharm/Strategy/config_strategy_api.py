@@ -27,6 +27,7 @@ kline_limit = 200
 z_score_window = 21
 # filename and relative path
 data_file = "Data/1_price_list.json"
+cointegrated_pairs_file = "Data/2_cointegrated_pairs.csv"
 
 # LIVE API
 api_key_mainnet = ""
