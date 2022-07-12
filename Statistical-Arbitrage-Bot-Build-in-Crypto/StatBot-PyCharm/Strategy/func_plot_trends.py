@@ -3,6 +3,7 @@ from func_cointegration import calculate_cointegration
 from func_cointegration import calculate_spread
 from func_cointegration import extract_close_prices
 from func_cointegration import calculate_zscore
+from config_strategy_api import backtest_file
 import matplotlib.pyplot as plt
 import pandas as pd
 
@@ -29,3 +30,12 @@ def plot_trends(sym_1, sym_2, price_data):
     df[f"{sym_2}_pct"] = df[sym_2] / prices_2[0]
     series_1 = df[f"{sym_1}_pct"].astype(float).values
     series_2 = df[f"{sym_2}_pct"].astype(float).values
+
+    # Save results for backtesting
+    df_2 = pd.DataFrame()
+    df_2[sym_1] = prices_1
+    df_2[sym_2] = prices_2
+    df_2["Spread"] = spread
+    df_2["ZScore"] = zscore
+    df_2.to_csv(backtest_file)
+    print("File for backtesting saved.")
