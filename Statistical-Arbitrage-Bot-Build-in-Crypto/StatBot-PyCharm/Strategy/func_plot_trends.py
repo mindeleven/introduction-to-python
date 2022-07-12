@@ -18,5 +18,14 @@ def plot_trends(sym_1, sym_2, price_data):
     coint_flag, p_value, t_value, c_value, hedge_ratio, zero_crossings = calculate_cointegration(prices_1, prices_2)
     spread = calculate_spread(prices_1, prices_2, hedge_ratio)
     zscore = calculate_zscore(spread)
+    # print(zscore)
 
-    print(zscore)
+    # Calculate percent changes
+    df = pd.DataFrame(columns = [sym_1, sym_2])
+    df[sym_1] = prices_1
+    df[sym_2] = prices_2
+    # take the latest item in the data frame divided by the very first one
+    df[f"{sym_1}_pct"] = df[sym_1] / prices_1[0]
+    df[f"{sym_2}_pct"] = df[sym_2] / prices_2[0]
+    series_1 = df[f"{sym_1}_pct"].astype(float).values
+    series_2 = df[f"{sym_2}_pct"].astype(float).values
