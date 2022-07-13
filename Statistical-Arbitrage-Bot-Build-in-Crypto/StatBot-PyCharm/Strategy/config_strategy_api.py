@@ -28,6 +28,7 @@ z_score_window = 21
 # filename and relative path
 data_file = "Data/1_price_list.json"
 cointegrated_pairs_file = "Data/2_cointegrated_pairs.csv"
+backtest_file = "Data/3_backtest_file.csv"
 
 # LIVE API
 api_key_mainnet = ""
