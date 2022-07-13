@@ -42,7 +42,7 @@ def plot_trends(sym_1, sym_2, price_data):
 
     # Plot charts
     fig, axs = plt.subplots(3, figsize=(16, 8))
-    fig.subtitle(f"Price and Spread - {sym_1} vs {sym_2}")
+    fig.suptitle(f"Price and Spread - {sym_1} vs {sym_2}")
     axs[0].plot(series_1)
     axs[0].plot(series_2)
     axs[1].plot(spread)
