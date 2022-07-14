@@ -11,6 +11,7 @@ import json
 import os.path
 from config_strategy_api import data_file
 from config_strategy_api import cointegrated_pairs_file
+from config_strategy_api import backtest_file
 
 
 """STRATEGY CODE"""
@@ -45,9 +46,9 @@ if __name__ == '__main__':
 
     # STEP 4 - Plot trends and safe for backtesting
     print("Plotting trends....")
-    symbol_1 = "BNBUSDT"
-    symbol_2 = "OMGUSDT"
+    symbol_1 = "ETCUSDT"
+    symbol_2 = "BSVUSDT"
     with open(data_file) as json_file:
         price_data = json.load(json_file)
         if len(price_data) > 0:
-            plot_trends(symbol_1, symbol_2, price_data)
+            plot_trends(symbol_1, symbol_2, price_data, backtest_file)
