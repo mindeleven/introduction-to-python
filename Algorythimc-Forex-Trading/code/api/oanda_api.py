@@ -23,7 +23,7 @@ class OandaApi:
         # putting request in a try block
         try: 
             response = None
-            if verb = "get":
+            if verb == "get":
                 response = self.session.get(full_url, params=params, data=data, headers=headers)
             
             if response == None:
