@@ -19,7 +19,7 @@ class OandaApi:
         })
     
     def make_request(self, url, verb='get', code=200, params=None, data=None, headers=None):
-        full_url = f"{defs.OANDA_URL/{url}}"
+        full_url = f"{defs.OANDA_URL}/{url}"
         # putting request in a try block
         try: 
             response = None
