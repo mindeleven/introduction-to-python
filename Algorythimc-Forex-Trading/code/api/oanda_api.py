@@ -46,3 +46,8 @@ class OandaApi:
             print("ERROR get_account_ep()", data)
             return None
 
+    def get_account_summary(self):
+        return self.get_account_ep("summary", "account")
+
+    def get_instruments(self):
+        return self.get_account_ep("instruments", "instruments")
