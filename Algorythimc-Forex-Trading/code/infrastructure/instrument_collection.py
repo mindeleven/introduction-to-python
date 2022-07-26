@@ -20,4 +20,8 @@ class InstrumentCollection:
             for k, v in data.items():
                 # create instrument class for each instrument
                 self.instruments_dict[k] = Instrument.FromApiObject(v)
+    
+    def PrintInstruments(self):
+        [print(k,v) for k,v in self.instruments_dict.items()]
+        print(len(self.instruments_dict.keys()), "instruments")
 
