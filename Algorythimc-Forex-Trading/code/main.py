@@ -8,5 +8,9 @@ if __name__ == '__main__':
    #data = api.get_account_summary()
    #print(data)
 
+   instrumentCollection.CreateFile(api.get_account_instruments(), '../data')
    instrumentCollection.LoadInstruments("../data")
    instrumentCollection.PrintInstruments()
+
+
+   

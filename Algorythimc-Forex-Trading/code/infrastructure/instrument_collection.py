@@ -21,6 +21,25 @@ class InstrumentCollection:
                 # create instrument class for each instrument
                 self.instruments_dict[k] = Instrument.FromApiObject(v)
     
+    def CreateFile(self, data, path):
+        if data is None:
+            print("Instrument file creation failed")
+            return
+        
+        # create instruments dictionary
+        instruments_dict = {}
+        for i in data:
+            # print(i['name'])
+            key = i['name']
+            instruments_dict[key] = {
+                k: i[k] for k in self.API_KEYS
+            }
+
+        # save dictionary to file
+        fileName = f"{path}/{self.FILENAME}"
+        with open(fileName, "w") as f:
+            f.write(json.dumps(instruments_dict, indent=2))
+
     def PrintInstruments(self):
         [print(k,v) for k,v in self.instruments_dict.items()]
         print(len(self.instruments_dict.keys()), "instruments")
