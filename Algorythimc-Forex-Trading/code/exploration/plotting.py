@@ -11,9 +11,9 @@ class CandlePlot:
         # create candle figure on instantiation
         self.create_candle_fig()
     
-    def add_timestring(self):
+    def add_timestr(self):
         self.df['sTime'] = [
-            dt.datetime.strftime(x, "s%y-%m-%d %H:%M") for x in df.time
+            dt.datetime.strftime(x, "s%y-%m-%d %H:%M") for x in self.df_plot.time
         ]
 
     def create_candle_fig(self):
