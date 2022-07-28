@@ -60,3 +60,7 @@ class CandlePlot:
             plot_bgcolor="#2c303c",
             font = dict(size=8, color="#e1e1e1")
         )
+
+    def show_plot(self, width=900, height=400, nticks=5):
+        self.update_layout(width, height, nticks)
+        self.fig.show()
