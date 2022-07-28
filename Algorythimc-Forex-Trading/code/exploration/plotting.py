@@ -37,3 +37,26 @@ class CandlePlot:
             increasing_line_color = "#2EC886",
             decreasing_line_color = "#FF3A4C"
         ))
+    
+    def update_layout(self, width, height, nticks):
+        self.fig.update_yaxes(
+            gridcolor = "#1f292f"
+        )
+        self.fig.update_xaxes(
+            gridcolor = "#1f292f",
+            # removing range slider
+            rangeslider = dict(
+                visible = False
+            ),
+            # how many ticks do we want to see on x-axis?
+            nticks = nticks
+        )
+        # modifying the colors
+        self.fig.update_layout(
+            width  = width,
+            height = height,
+            margin = dict(l=10, r=10, b=10, t=10),
+            paper_bgcolor="#2c303c",
+            plot_bgcolor="#2c303c",
+            font = dict(size=8, color="#e1e1e1")
+        )
