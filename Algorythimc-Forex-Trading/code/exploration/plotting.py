@@ -12,7 +12,7 @@ class CandlePlot:
         self.create_candle_fig()
     
     def add_timestr(self):
-        self.df['sTime'] = [
+        self.df_plot['sTime'] = [
             dt.datetime.strftime(x, "s%y-%m-%d %H:%M") for x in self.df_plot.time
         ]
 
