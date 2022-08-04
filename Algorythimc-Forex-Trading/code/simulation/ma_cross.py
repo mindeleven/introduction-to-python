@@ -6,7 +6,7 @@ SELL = -1
 NONE = 0
 get_ma_col = lambda x: f"MA_{x}"
 
-def is_trade():
+def is_trade(row):
     if row.DELTA >= 0 and row.DELTA_PREV < 0:
         return BUY
     elif row.DELTA < 0 and row.DELTA_PREV >= 0:
@@ -23,12 +23,23 @@ def load_price_data(pair, granularity, ma_list):
     df.reset_index(drop=True, inplace=True)
     return df
 
+def get_trades(df_analysis, instrument):
+    df_trades = df_analysis[df_analysis.TRADE != NONE].copy()
+    df_trades["DIFF"] = df_trades.mid_c.diff().shift(-1)
+    df_trades.fillna(0, inplace=True)
+    df_trades["GAIN"] = df_trades.DIFF / instrument.pipLocation
+    df_trades["GAIN"] = df_trades["GAIN"] * df_trades["TRADE"]
+    total_gain = df_trades["GAIN"].sum()
+    return dict(total_gain=total_gain, df_trades=df_trades)
+
 def assess_pair(price_data, ma_l, ma_s, instrument):
     df_analysis = price_data.copy()
     df_analysis["DELTA"] = df_analysis[ma_s] - df_analysis[ma_l]
     df_analysis["DELTA_PREV"] = df_analysis["DELTA"].shift(1)
     df_analysis["TRADE"] = df_analysis.apply(is_trade, axis=1)
-    return None
+    print(instrument.name, ma_l, ma_s)
+    print(df_analysis.head(3))
+    return get_trades(df_analysis, instrument)
 
 def analyse_pair(instrument, granularity, ma_long, ma_short):
     
