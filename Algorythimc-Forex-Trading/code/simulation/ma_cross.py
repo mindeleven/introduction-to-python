@@ -6,6 +6,12 @@ SELL = -1
 NONE = 0
 get_ma_col = lambda x: f"MA_{x}"
 
+def is_trade():
+    if row.DELTA >= 0 and row.DELTA_PREV < 0:
+        return BUY
+    elif row.DELTA < 0 and row.DELTA_PREV >= 0:
+        return SELL
+    return NONE
 
 def load_price_data(pair, granularity, ma_list):
     # load the data frame for pair and granularity granularity
@@ -16,9 +22,6 @@ def load_price_data(pair, granularity, ma_list):
     df.dropna(inplace=True)
     df.reset_index(drop=True, inplace=True)
     return df
-
-def is_trade():
-    pass
 
 def assess_pair(price_data, ma_l, ma_s, instrument):
     df_analysis = price_data.copy()
