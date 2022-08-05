@@ -8,6 +8,10 @@ class MAResult:
         self.ma_l = ma_l
         self.ma_s = ma_s,
         self.result = self.result_obj()
+
+    def __repr__(self):
+        pass
+        # return str(self.result_obj)
     
     def result_obj(self):
         return dict(
@@ -50,7 +54,8 @@ def get_trades(df_analysis, instrument):
     df_trades["GAIN"] = df_trades.DIFF / instrument.pipLocation
     df_trades["GAIN"] = df_trades["GAIN"] * df_trades["TRADE"]
     total_gain = df_trades["GAIN"].sum()
-    return dict(total_gain=int(total_gain), df_trades=df_trades)
+    # return dict(total_gain=int(total_gain), df_trades=df_trades)
+    return df_trades
 
 def assess_pair(price_data, ma_l, ma_s, instrument):
     df_analysis = price_data.copy()
