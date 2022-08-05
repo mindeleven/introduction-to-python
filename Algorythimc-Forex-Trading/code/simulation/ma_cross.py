@@ -1,6 +1,13 @@
 import pandas as pd
 from infrastructure.instrument_collection import instrumentCollection as ic
 
+class MAResult:
+    def __init__(self, df_trades, pairname, ma_l, ma_s):
+        self.df_trades = df_trades
+        self.pairname = pairname
+        self.ma_l = ma_l
+        self.ma_s = ma_s
+
 BUY = 1
 SELL = -1
 NONE = 0
