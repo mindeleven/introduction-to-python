@@ -6,7 +6,20 @@ class MAResult:
         self.df_trades = df_trades
         self.pairname = pairname
         self.ma_l = ma_l
-        self.ma_s = ma_s
+        self.ma_s = ma_s,
+        self.result = self.result_obj()
+    
+    def result_obj(self):
+        return dict(
+            pair = self.pairname,
+            num_trades = self.df_trades.shape[0],
+            total_gain = int(self.df_trades.GAIN.sum()),
+            mean_gain = int(self.df_trades.GAIN.mean()),
+            min_gain = int(self.df_trades.GAIN.min()),
+            max_gain = int(self.df_trades.GAIN.max()),
+            ma_l = self.ma_l,
+            ma_s = self.ma_s
+        )
 
 BUY = 1
 SELL = -1
