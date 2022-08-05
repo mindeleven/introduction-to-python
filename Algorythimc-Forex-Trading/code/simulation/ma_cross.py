@@ -10,8 +10,7 @@ class MAResult:
         self.result = self.result_obj()
 
     def __repr__(self):
-        pass
-        # return str(self.result_obj)
+        return str(self.result)
     
     def result_obj(self):
         return dict(
@@ -64,7 +63,14 @@ def assess_pair(price_data, ma_l, ma_s, instrument):
     df_analysis["TRADE"] = df_analysis.apply(is_trade, axis=1)
     # print(instrument.name, ma_l, ma_s)
     # print(df_analysis.head(3))
-    return get_trades(df_analysis, instrument)
+    # return get_trades(df_analysis, instrument)
+    df_trades = get_trades(df_analysis, instrument)
+    return MAResult(
+        df_trades,
+        instrument.name,
+        ma_l,
+        ma_s
+    )
 
 def analyse_pair(instrument, granularity, ma_long, ma_short):
     
@@ -82,17 +88,16 @@ def analyse_pair(instrument, granularity, ma_long, ma_short):
             if ma_l <= ma_s:
                 continue
 
-            result = assess_pair(
+            ma_result = assess_pair(
                 price_data,
                 get_ma_col(ma_l),
                 get_ma_col(ma_s),
                 instrument
             )
-
-            tg = result['total_gain']
-            nt = result['df_trades'].shape[0] # rows are first item of shape tuple
-         
-            print(f"{pair} {granularity} {ma_s}-{ma_l} num-trades: {nt} tot-gain: {tg}")   
+            # tg = result['total_gain']
+            # nt = result['df_trades'].shape[0] # rows are first item of shape tuple
+            # print(f"{pair} {granularity} {ma_s}-{ma_l} num-trades: {nt} tot-gain: {tg}")   
+            print(ma_result)
 
 def run_ma_sim(
     curr_list=["EUR", "USD", "AUD", "GBP"],
