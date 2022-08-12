@@ -71,6 +71,9 @@ def assess_pair(price_data, ma_l, ma_s, instrument, granularity):
     # print(df_analysis.head(3))
     # return get_trades(df_analysis, instrument)
     df_trades = get_trades(df_analysis, instrument, granularity)
+    df_trades["ma_l"] = ma_l
+    df_trades["ma_s"] = ma_s
+
     return MAResult(
         df_trades,
         instrument.name,
@@ -85,6 +88,7 @@ def process_results(results_list):
     df = pd.DataFrame.from_dict(rl)
     # single data frame for each of the results that gets tested
     print(df)
+    print(results_list[0].df_trades.head(2))
     # continiously append results to same file
 
 def analyse_pair(instrument, granularity, ma_long, ma_short):
