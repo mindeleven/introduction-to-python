@@ -72,6 +72,12 @@ def assess_pair(price_data, ma_l, ma_s, instrument):
         ma_s
     )
 
+def process_results(results_list):
+    # putting results list into data frame
+    rl = [x.result for x in results_list]
+    df = pd.DataFrame.from_dict(rl)
+    print(df)
+
 def analyse_pair(instrument, granularity, ma_long, ma_short):
     
     ma_list = set(ma_long + ma_short)
@@ -105,6 +111,7 @@ def analyse_pair(instrument, granularity, ma_long, ma_short):
             results_list.append(ma_result)
     
     # create df
+    process_results(results_list)
 
 
 def run_ma_sim(
