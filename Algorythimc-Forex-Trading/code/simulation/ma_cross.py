@@ -2,11 +2,12 @@ import pandas as pd
 from infrastructure.instrument_collection import instrumentCollection as ic
 
 class MAResult:
-    def __init__(self, df_trades, pairname, ma_l, ma_s):
+    def __init__(self, df_trades, pairname, ma_l, ma_s, granularity):
         self.df_trades = df_trades
         self.pairname = pairname
         self.ma_l = ma_l
         self.ma_s = ma_s,
+        self.granularity = granularity,
         self.result = self.result_obj()
 
     def __repr__(self):
@@ -21,7 +22,8 @@ class MAResult:
             min_gain = int(self.df_trades.GAIN.min()),
             max_gain = int(self.df_trades.GAIN.max()),
             ma_l = self.ma_l,
-            ma_s = self.ma_s
+            ma_s = self.ma_s,
+            granularity = self.granularity
         )
 
 BUY = 1
@@ -56,7 +58,7 @@ def get_trades(df_analysis, instrument):
     # return dict(total_gain=int(total_gain), df_trades=df_trades)
     return df_trades
 
-def assess_pair(price_data, ma_l, ma_s, instrument):
+def assess_pair(price_data, ma_l, ma_s, instrument, granularity):
     df_analysis = price_data.copy()
     df_analysis["DELTA"] = df_analysis[ma_s] - df_analysis[ma_l]
     df_analysis["DELTA_PREV"] = df_analysis["DELTA"].shift(1)
@@ -69,14 +71,17 @@ def assess_pair(price_data, ma_l, ma_s, instrument):
         df_trades,
         instrument.name,
         ma_l,
-        ma_s
+        ma_s,
+        granularity
     )
 
 def process_results(results_list):
     # putting results list into data frame
     rl = [x.result for x in results_list]
     df = pd.DataFrame.from_dict(rl)
+    # single data frame for each of the results that gets tested
     print(df)
+    # continiously append results to same file
 
 def analyse_pair(instrument, granularity, ma_long, ma_short):
     
@@ -102,7 +107,8 @@ def analyse_pair(instrument, granularity, ma_long, ma_short):
                 price_data,
                 get_ma_col(ma_l),
                 get_ma_col(ma_s),
-                instrument
+                instrument,
+                granularity
             )
             # tg = result['total_gain']
             # nt = result['df_trades'].shape[0] # rows are first item of shape tuple
@@ -116,7 +122,7 @@ def analyse_pair(instrument, granularity, ma_long, ma_short):
 
 def run_ma_sim(
     curr_list=["EUR", "USD", "AUD", "GBP"],
-    granularity=["H1"],
+    granularity=["H1", "H4"],
     ma_long=[20, 40, 80],
     ma_short=[10, 20]
 ):
