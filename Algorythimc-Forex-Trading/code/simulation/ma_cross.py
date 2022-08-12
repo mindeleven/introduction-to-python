@@ -1,4 +1,5 @@
 import pandas as pd
+import os.path
 from infrastructure.instrument_collection import instrumentCollection as ic
 
 class MAResult:
@@ -81,6 +82,20 @@ def assess_pair(price_data, ma_l, ma_s, instrument, granularity):
         ma_s,
         granularity
     )
+
+def append_df_to_file(df, filename):
+    # append data if file exists
+    # create new file if it doesn't exist
+    pass
+
+def get_fullname(filepath, filename):
+    pass
+
+def process_macro(results_list, filename):
+    pass
+
+def process_trades(results_list, filename):
+    pass
 
 def process_results(results_list):
     # putting results list into data frame
