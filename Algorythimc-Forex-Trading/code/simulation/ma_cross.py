@@ -48,13 +48,14 @@ def load_price_data(pair, granularity, ma_list):
     df.reset_index(drop=True, inplace=True)
     return df
 
-def get_trades(df_analysis, instrument):
+def get_trades(df_analysis, instrument, granularity):
     df_trades = df_analysis[df_analysis.TRADE != NONE].copy()
     df_trades["DIFF"] = df_trades.mid_c.diff().shift(-1)
     df_trades.fillna(0, inplace=True)
     df_trades["GAIN"] = df_trades.DIFF / instrument.pipLocation
     df_trades["GAIN"] = df_trades["GAIN"] * df_trades["TRADE"]
-    total_gain = df_trades["GAIN"].sum()
+    df_trades["granularity"] = granularity
+    # total_gain = df_trades["GAIN"].sum()
     # return dict(total_gain=int(total_gain), df_trades=df_trades)
     return df_trades
 
@@ -66,7 +67,7 @@ def assess_pair(price_data, ma_l, ma_s, instrument, granularity):
     # print(instrument.name, ma_l, ma_s)
     # print(df_analysis.head(3))
     # return get_trades(df_analysis, instrument)
-    df_trades = get_trades(df_analysis, instrument)
+    df_trades = get_trades(df_analysis, instrument, granularity)
     return MAResult(
         df_trades,
         instrument.name,
