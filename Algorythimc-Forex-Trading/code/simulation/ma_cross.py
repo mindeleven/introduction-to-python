@@ -102,8 +102,10 @@ def analyse_pair(instrument, granularity, ma_long, ma_short):
             # nt = result['df_trades'].shape[0] # rows are first item of shape tuple
             # print(f"{pair} {granularity} {ma_s}-{ma_l} num-trades: {nt} tot-gain: {tg}")   
             print(ma_result)
-            results_list(ma_result)
-            
+            results_list.append(ma_result)
+    
+    # create df
+
 
 def run_ma_sim(
     curr_list=["EUR", "USD", "AUD", "GBP"],
