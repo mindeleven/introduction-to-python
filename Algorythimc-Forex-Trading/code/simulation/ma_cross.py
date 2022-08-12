@@ -55,6 +55,9 @@ def get_trades(df_analysis, instrument, granularity):
     df_trades["GAIN"] = df_trades.DIFF / instrument.pipLocation
     df_trades["GAIN"] = df_trades["GAIN"] * df_trades["TRADE"]
     df_trades["granularity"] = granularity
+    df_trades["pair"] = instrument.name
+    # adding cumulative sum of the gains
+    df_trades["GAIN_C"] = df_trades["GAIN"].cumsum()
     # total_gain = df_trades["GAIN"].sum()
     # return dict(total_gain=int(total_gain), df_trades=df_trades)
     return df_trades
