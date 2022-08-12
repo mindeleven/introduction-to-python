@@ -97,7 +97,8 @@ def process_macro(results_list, filename):
 def process_trades(results_list, filename):
     pass
 
-def process_results(results_list):
+def process_results(results_list, filepath):
+    process_macro(results_list, get_fullname(filepath, 'ma_res'))
     # putting results list into data frame
     rl = [x.result for x in results_list]
     df = pd.DataFrame.from_dict(rl)
@@ -106,7 +107,7 @@ def process_results(results_list):
     print(results_list[0].df_trades.head(2))
     # continiously append results to same file
 
-def analyse_pair(instrument, granularity, ma_long, ma_short):
+def analyse_pair(instrument, granularity, ma_long, ma_short, filepath):
     
     ma_list = set(ma_long + ma_short)
     pair = instrument.name
@@ -140,14 +141,15 @@ def analyse_pair(instrument, granularity, ma_long, ma_short):
             results_list.append(ma_result)
     
     # create df
-    process_results(results_list)
+    process_results(results_list,filepath)
 
 
 def run_ma_sim(
     curr_list=["EUR", "USD", "AUD", "GBP"],
     granularity=["H1", "H4"],
     ma_long=[20, 40, 80],
-    ma_short=[10, 20]
+    ma_short=[10, 20],
+    filepath="../data"
 ):
     ic.LoadInstruments("../data")
     for g in granularity:
@@ -156,4 +158,4 @@ def run_ma_sim(
                 pair = f"{p1}_{p2}"
                 # check if pait in currency list
                 if pair in ic.instruments_dict.keys():
-                    analyse_pair(ic.instruments_dict[pair], g, ma_long, ma_short)
+                    analyse_pair(ic.instruments_dict[pair], g, ma_long, ma_short, filepath)
