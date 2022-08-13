@@ -99,12 +99,13 @@ def process_trades(results_list, filename):
 
 def process_results(results_list, filepath):
     process_macro(results_list, get_fullname(filepath, 'ma_res'))
+    process_trades(results_list, get_fullname(filepath, 'ma_trades'))
     # putting results list into data frame
-    rl = [x.result for x in results_list]
-    df = pd.DataFrame.from_dict(rl)
+    # rl = [x.result for x in results_list]
+    # df = pd.DataFrame.from_dict(rl)
     # single data frame for each of the results that gets tested
-    print(df)
-    print(results_list[0].df_trades.head(2))
+    # print(df)
+    # print(results_list[0].df_trades.head(2))
     # continiously append results to same file
 
 def analyse_pair(instrument, granularity, ma_long, ma_short, filepath):
@@ -141,7 +142,7 @@ def analyse_pair(instrument, granularity, ma_long, ma_short, filepath):
             results_list.append(ma_result)
     
     # create df
-    process_results(results_list,filepath)
+    process_results(results_list, filepath)
 
 
 def run_ma_sim(
