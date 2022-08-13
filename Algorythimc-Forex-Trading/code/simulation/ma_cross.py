@@ -1,3 +1,4 @@
+from genericpath import isfile
 import pandas as pd
 import os.path
 from infrastructure.instrument_collection import instrumentCollection as ic
@@ -86,7 +87,12 @@ def assess_pair(price_data, ma_l, ma_s, instrument, granularity):
 def append_df_to_file(df, filename):
     # append data if file exists
     # create new file if it doesn't exist
-    pass
+    if os.path.isfile(filename):
+        fd = pd.read_pickle(filename)
+        df = pd.concat([fd, df])
+    df.to_pickle(filename)
+    print(filename, df.shape)
+    print(df.tail(2))
 
 def get_fullname(filepath, filename):
     return f"{filepath}/{filename}.pkl"
