@@ -89,10 +89,14 @@ def append_df_to_file(df, filename):
     pass
 
 def get_fullname(filepath, filename):
-    pass
+    return f"{filepath}/{filename}.pkl"
 
 def process_macro(results_list, filename):
-    pass
+    # putting results list into data frame
+    rl = [x.result for x in results_list]
+    df = pd.DataFrame.from_dict(rl)
+    # append dataframe to file
+    append_df_to_file(df, filename)
 
 def process_trades(results_list, filename):
     pass
