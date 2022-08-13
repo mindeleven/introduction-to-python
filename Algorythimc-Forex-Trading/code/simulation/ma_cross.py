@@ -99,7 +99,9 @@ def process_macro(results_list, filename):
     append_df_to_file(df, filename)
 
 def process_trades(results_list, filename):
-    pass
+    # concatenate list of data frames
+    df = pd.concat([x.df_trades for x in results_list])
+    append_df_to_file(df, filename)
 
 def process_results(results_list, filepath):
     process_macro(results_list, get_fullname(filepath, 'ma_res'))
