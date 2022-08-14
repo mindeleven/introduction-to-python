@@ -1,6 +1,7 @@
 from genericpath import isfile
 import pandas as pd
 import os.path
+from datetime import datetime
 from infrastructure.instrument_collection import instrumentCollection as ic
 
 class MAResult:
@@ -110,8 +111,9 @@ def process_trades(results_list, filename):
     append_df_to_file(df, filename)
 
 def process_results(results_list, filepath):
-    process_macro(results_list, get_fullname(filepath, 'ma_res'))
-    process_trades(results_list, get_fullname(filepath, 'ma_trades'))
+    current_time = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+    process_macro(results_list, get_fullname(filepath, current_time+'-ma_res'))
+    process_trades(results_list, get_fullname(filepath, current_time+'-ma_trades'))
     # putting results list into data frame
     # rl = [x.result for x in results_list]
     # df = pd.DataFrame.from_dict(rl)
