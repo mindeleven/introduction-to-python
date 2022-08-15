@@ -111,6 +111,8 @@ def process_trades(results_list, filename):
     append_df_to_file(df, filename)
 
 def process_results(results_list, filepath):
+    # add date and time to filename 
+    # otherwise new results will be appended to alread existing file
     current_time = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
     process_macro(results_list, get_fullname(filepath, current_time+'-ma_res'))
     process_trades(results_list, get_fullname(filepath, current_time+'-ma_trades'))
