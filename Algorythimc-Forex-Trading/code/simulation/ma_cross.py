@@ -92,6 +92,7 @@ def append_df_to_file(df, filename):
         fd = pd.read_pickle(filename)
         df = pd.concat([fd, df])
     df.to_pickle(filename)
+    print('####################################')
     print(filename, df.shape)
     print(df.tail(2))
 
@@ -164,8 +165,8 @@ def analyse_pair(instrument, granularity, ma_long, ma_short, filepath):
 def run_ma_sim(
     curr_list=["EUR", "USD", "AUD", "GBP"],
     granularity=["H1", "H4"],
-    ma_long=[20, 40, 80],
-    ma_short=[10, 20],
+    ma_long=[20, 40, 80, 120, 150],
+    ma_short=[10, 20, 30, 40],
     filepath="../data"
 ):
     ic.LoadInstruments("../data")
