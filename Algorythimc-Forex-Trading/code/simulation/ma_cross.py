@@ -26,6 +26,7 @@ class MAResult:
             max_gain = int(self.df_trades.GAIN.max()),
             ma_l = self.ma_l,
             ma_s = self.ma_s,
+            cross = f"{self.ma_s}_{self.ma_l}",
             granularity = self.granularity
         )
 
@@ -33,6 +34,7 @@ BUY = 1
 SELL = -1
 NONE = 0
 get_ma_col = lambda x: f"MA_{x}"
+add_cross = lambda x: f"{x.ma_s}_{x.ma_l}"
 
 def is_trade(row):
     if row.DELTA >= 0 and row.DELTA_PREV < 0:
@@ -76,6 +78,7 @@ def assess_pair(price_data, ma_l, ma_s, instrument, granularity):
     df_trades = get_trades(df_analysis, instrument, granularity)
     df_trades["ma_l"] = ma_l
     df_trades["ma_s"] = ma_s
+    df_trades["cross"] = df_trades.apply(add_cross, axis=1)
 
     return MAResult(
         df_trades,
@@ -91,8 +94,13 @@ def append_df_to_file(df, filename):
     if os.path.isfile(filename):
         fd = pd.read_pickle(filename)
         df = pd.concat([fd, df])
+    
+    # reset index after concatination to avoid having 
+    # duplicate indeces
+    df.reset_index(inplace=True, drop=True)
     df.to_pickle(filename)
-    print('####################################')
+
+    print('################# NEW FILE ###################')
     print(filename, df.shape)
     print(df.tail(2))
 
