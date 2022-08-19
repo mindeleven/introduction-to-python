@@ -9,8 +9,8 @@ class MAResult:
         self.df_trades = df_trades
         self.pairname = pairname
         self.ma_l = ma_l
-        self.ma_s = ma_s,
-        self.granularity = granularity,
+        self.ma_s = ma_s
+        self.granularity = granularity
         self.result = self.result_obj()
 
     def __repr__(self):
